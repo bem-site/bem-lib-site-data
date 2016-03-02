@@ -121,7 +121,7 @@ function getExampleLevelsByPlatform(lib, platform) {
 
 
 function wrapInPage(bemjson, meta) {
-    var basename = '_' + path.basename(meta.filename, '.bemjson.js');
+    var basename = path.basename(meta.filename, '.bemjson.js');
 
     if (libConf.coreLib === 'bem-bl') {
         return {

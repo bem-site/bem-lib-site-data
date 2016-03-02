@@ -17,7 +17,6 @@
     "bem-config": "bem-contrib/bem-config#wip-new-with-rc",
     "bem-md-renderer": "^0.3.1",
     "bem-naming": "^0.5.1",
-    "borschik-tech-cleancss": "^2.1.0",
     "bower": "^1.7.7",
     "bower-endpoint-parser": "^0.2.2",
     "del": "^2.2.0",

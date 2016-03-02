@@ -37,14 +37,18 @@ module.exports = function(config, nodes, levels) {
             [techs.css.stylus, {
                 autoprefixer: {
                     browsers: getBrowsers(platform)
-                }
+                },
+                url: 'inline',
+                compress: true
             }],
             [techs.css.stylus, {
                 target : '?.ie.css',
                 sourceSuffixes : ['styl', 'ie.styl'],
                 autoprefixer: {
                     browsers: getBrowsers(platform)
-                }
+                },
+                url: 'inline',
+                compress: true
             }],
             [techs.js, {
                 target : '?.browser.js',
@@ -149,28 +153,8 @@ module.exports = function(config, nodes, levels) {
         });
 
         nodeConfig.addTargets([
-            '_?.css', '_?.ie.css', '_?.js', '?.html'
+            '?.css', '?.ie.css', '?.js', '?.html'
         ]);
-    });
-
-    config.mode('development', function() {
-        config.nodes(nodes, function(nodeConfig) {
-            nodeConfig.addTechs([
-                [techs.borschik, { source : '?.css', target : '_?.css', freeze : true, minify : false }],
-                [techs.borschik, { source : '?.ie.css', target : '_?.ie.css', freeze : true, minify : false }],
-                [techs.borschik, { source : '?.js', target : '_?.js', freeze : true, minify : false }]
-            ]);
-        });
-    });
-
-    config.mode('production', function() {
-        config.nodes(nodes, function(nodeConfig) {
-            nodeConfig.addTechs([
-                [techs.borschik, { source : '?.css', target : '_?.css', freeze : true, tech : 'cleancss', minify : true }],
-                [techs.borschik, { source : '?.ie.css', target : '_?.ie.css', freeze : true, tech : 'cleancss', minify : true }],
-                [techs.borschik, { source : '?.js', target : '_?.js', freeze : true, minify : true }]
-            ]);
-        });
     });
 };
 
