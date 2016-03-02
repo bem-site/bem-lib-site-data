@@ -22,8 +22,6 @@ var fs = require('fs'),
     tempFolder = 'tmp', // it's hardcoded because of magicPlatform requirement
     destFolder = path.join(tempFolder, 'data');
 
-if (!lib) throw('Please specify library with LIB env variable');
-
 module.exports = function (config) {
     libConf.langs !== false && config.setLanguages(langs? langs.split(' ') : [].concat(DEFAULT_LANGS));
 
@@ -82,8 +80,7 @@ function getLevelsByPlatform(lib, platform) {
 }
 
 function getExampleLevelsByPlatform(lib, platform) {
-    var levels = [],
-        libConfig = config.libs[lib] || {},
+    var libConfig = config.libs[lib] || {},
         pathToLibs = (libConfig.deps || bowerConf.dependencies && Object.keys(bowerConf.dependencies)
             .filter(function(dep) { return dep.indexOf('bem-') > -1; }) || [])
             .map(function(depLibName) {
@@ -94,27 +91,25 @@ function getExampleLevelsByPlatform(lib, platform) {
                 return path.join(tempFolder, 'bower', pathToLib.replace(/\.\.\//g, ''), depLibName);
             }).concat(pathToLib);
 
-    pathToLibs.forEach(function(pathToLib) {
-        levels = ['examples.blocks'].concat(
-            levels,
-            path.join(pathToLib, 'blocks'),
-            // path.join(pathToLib, 'test.blocks'), // TODO: ломает engino, должно быть вынесено в конфиг
+    var levels = ['examples.blocks'];
+
+    pathToLibs.forEach(function(libPath) {
+        var absLibPath = path.resolve(libPath);
+
+        levels = levels.concat(
+            path.join(absLibPath, 'blocks'),
+            // path.join(absLibPath, 'test.blocks'), // TODO: ломает engino, должно быть вынесено в конфиг
             platforms[platform].map(function(level) {
-                return path.join(pathToLib, 'blocks-' + level);
+                return path.join(absLibPath, 'blocks-' + level);
             }),
             platforms[platform].map(function(level) {
-                return path.join(pathToLib, level + '.blocks');
+                return path.join(absLibPath, level + '.blocks');
             }),
             platforms[platform].map(function(level) {
-                return path.join(pathToLib, 'design', level + '.blocks');
+                return path.join(absLibPath, 'design', level + '.blocks');
             })
         );
     });
-
-    // TODO: check for extra 'examples.blocks' levels in filtered array
-
-    // console.log('levels before filter', levels);
-    // console.log('levels after filter', levels.filter(fs.existsSync));
 
     return levels.filter(fs.existsSync);
 }

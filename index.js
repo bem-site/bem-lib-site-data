@@ -1,6 +1,7 @@
 var path = require('path'),
     mv = require('mv'),
     del = require('del'),
+    Promise = require('pinkie-promise'),
     magicPlatform = require('enb-magic-platform'),
     installBowerDeps = require('./lib/install-bower-deps'),
     introspect = require('./lib/introspect'),
