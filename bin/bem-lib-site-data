@@ -1,0 +1,7 @@
+#!/usr/bin/env node
+
+var siteData = require('..'),
+    args = process.argv.slice(2),
+    pathToLib = args[0];
+
+siteData(pathToLib);
