@@ -6,14 +6,14 @@ var fs = require('fs'),
     configureExampleNodes = require('./bundle-node-configurator'),
 
     DEFAULT_LANGS = ['ru', 'en'],
-    langs = process.env.BEM_I18N_LANGS, // TODO: use config
 
     pathToLib = process.env.BEM_LIB_SITE_GENERATOR_LIB,
     lib = path.basename(pathToLib),
 
-    bemConfig = new (require('bem-config'))(),
-    config = bemConfig.getModule('lib-site-generator'),
+    bemConfig = require('bem-config')(),
+    config = bemConfig.moduleSync('bem-lib-site-data'),
     libConf = config.libs[lib],
+    libLangs = process.env.BEM_I18N_LANGS && process.env.BEM_I18N_LANGS.split(' ') || libConf.langs || config.langs,
     bowerConf = fs.existsSync(path.join(pathToLib, 'bower.json')) && require(path.resolve(pathToLib, 'bower.json')) || {},
 
     platforms = libConf && libConf.platforms || config.platforms,
@@ -23,7 +23,7 @@ var fs = require('fs'),
     destFolder = path.join(tempFolder, 'data');
 
 module.exports = function (config) {
-    libConf.langs !== false && config.setLanguages(langs? langs.split(' ') : [].concat(DEFAULT_LANGS));
+    libLangs !== false && config.setLanguages(libLangs || DEFAULT_LANGS);
 
     config.includeConfig('enb-bem-examples');
     config.includeConfig('enb-bem-docs');

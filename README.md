@@ -37,7 +37,7 @@ module.exports = {
                         url: 'github.com',
                         user: 'bem',
                         repo: 'bem-components',
-                        defaultBranch: 'v2'
+                        defaultBranch: 'v3'
                     }
                 }
             }

@@ -6,8 +6,8 @@ var path = require('path'),
     installBowerDeps = require('./lib/install-bower-deps'),
     introspect = require('./lib/introspect'),
 
-    bemConfig = new (require('bem-config'))(),
-    config = bemConfig.getModule('lib-site-generator');
+    bemConfig = require('bem-config')(),
+    config = bemConfig.moduleSync('bem-lib-site-data');
 
 module.exports = function(pathToLib) {
     var initialCwd = process.cwd(),
