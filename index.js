@@ -10,9 +10,13 @@ var path = require('path'),
     bemConfig = require('bem-config')(),
     config = bemConfig.moduleSync('bem-lib-site-data');
 
-module.exports = function(pathToLib) {
+module.exports = function(pathToLib, version) {
+    version || (version = '1.0.0');
+
     var initialCwd = process.cwd(),
-        absPathToLib = path.resolve(pathToLib);
+        absPathToLib = path.resolve(pathToLib),
+        // TODO: check for usage of local lib config langs
+        langs = config.langs;
 
     // NOTE: needed for magicPlatform
     process.chdir(__dirname);
@@ -33,22 +37,19 @@ module.exports = function(pathToLib) {
             // move built data to dest folder
             // NOTE: there's no obvious way to build it there beforehand with magicPlatform
             return new Promise(function(resolve, reject) {
-                var destPath = path.resolve(initialCwd, config.tempFolder, 'data', lib);
+                var destPath = path.resolve(initialCwd, config.outputFolder || 'output', 'data', lib);
 
                 del(destPath).then(function() {
-                    mv(path.resolve('tmp', 'data', lib), destPath, { mkdirp: true }, function(err) {
+                    mv(path.resolve(config.tempFolder || 'tmp', 'data', lib), destPath, { mkdirp: true }, function(err) {
                         if (err) return reject(err);
 
-                        del('tmp').then(function() {
+                        Promise.all([
+                            del(config.tempFolder),
+                            generateDataJson(destPath, lib, version, langs, pathToLib)
+                        ]).then(function() {
                             process.chdir(initialCwd);
-
-                            // TODO: fix me!
-                            var version = '3.0.0',
-                                langs = ['ru', 'en'];
-
-                            generateDataJson(destPath, lib, version, langs, pathToLib).then(function() {
-                                resolve();
-                            });
+                            console.log('Data was collected at', destPath);
+                            resolve();
                         });
                     });
                 });
