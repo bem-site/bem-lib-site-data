@@ -5,6 +5,7 @@ var path = require('path'),
     magicPlatform = require('enb-magic-platform'),
     installBowerDeps = require('./lib/install-bower-deps'),
     introspect = require('./lib/introspect'),
+    generateDataJson = require('./lib/generate-data-json'),
 
     bemConfig = require('bem-config')(),
     config = bemConfig.moduleSync('bem-lib-site-data');
@@ -21,15 +22,14 @@ module.exports = function(pathToLib) {
 
     return installBowerDeps(absPathToLib)
         .then(function() {
-            return introspect(absPathToLib);
+            return Promise.all([
+                introspect(absPathToLib),
+                magicPlatform.runTasks(['examples', 'docs'])
+            ]);
         })
-        .then(function() {
-            return magicPlatform.runTasks('examples');
-        })
-        .then(function() {
-            return magicPlatform.runTasks('docs');
-        })
-        .then(function() {
+        .then(function(data) {
+            // var introspectionFiles = data[0];
+
             // move built data to dest folder
             // NOTE: there's no obvious way to build it there beforehand with magicPlatform
             return new Promise(function(resolve, reject) {
@@ -41,7 +41,14 @@ module.exports = function(pathToLib) {
 
                         del('tmp').then(function() {
                             process.chdir(initialCwd);
-                            resolve();
+
+                            // TODO: fix me!
+                            var version = '3.0.0',
+                                langs = ['ru', 'en'];
+
+                            generateDataJson(destPath, lib, version, langs, pathToLib).then(function() {
+                                resolve();
+                            });
                         });
                     });
                 });
