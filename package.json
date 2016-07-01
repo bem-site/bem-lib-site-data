@@ -10,6 +10,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": {
+    "bem-lib-site-view": "./bin/bem-lib-site-view"
+  },
   "author": "Vladimir Grinenko <i@tadatuta.com>",
   "license": "MPL-2.0",
   "dependencies": {
