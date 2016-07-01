@@ -11,7 +11,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "bem-lib-site-view": "./bin/bem-lib-site-view"
+    "bem-lib-site-data": "./bin/bem-lib-site-data"
   },
   "author": "Vladimir Grinenko <i@tadatuta.com>",
   "license": "MPL-2.0",
