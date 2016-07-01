@@ -14,9 +14,7 @@ module.exports = function(pathToLib, version) {
     version || (version = '1.0.0');
 
     var initialCwd = process.cwd(),
-        absPathToLib = path.resolve(pathToLib),
-        // TODO: check for usage of local lib config langs
-        langs = config.langs;
+        absPathToLib = path.resolve(pathToLib);
 
     // NOTE: needed for magicPlatform
     process.chdir(__dirname);
@@ -45,7 +43,7 @@ module.exports = function(pathToLib, version) {
 
                         Promise.all([
                             del(config.tempFolder),
-                            generateDataJson(destPath, lib, version, langs, pathToLib)
+                            generateDataJson(destPath, lib, version, pathToLib)
                         ]).then(function() {
                             process.chdir(initialCwd);
                             console.log('Data was collected at', destPath);

@@ -19,7 +19,7 @@ var fs = require('fs'),
     platforms = libConf && libConf.platforms || config.platforms,
     platformsNames = Object.keys(platforms),
 
-    tempFolder = 'tmp', // it's hardcoded because of magicPlatform requirement
+    tempFolder = config.tempFolder,
     destFolder = path.join(tempFolder, 'data');
 
 module.exports = function (config) {
