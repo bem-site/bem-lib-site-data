@@ -55,7 +55,9 @@ module.exports = function(pathToLib, version) {
                         ]).then(function() {
                             process.chdir(initialCwd);
                             console.log('Data was collected at', destPath);
-                            resolve();
+                            resolve({
+                                path: path.join(destPath)
+                            });
                         });
                     });
                 });
