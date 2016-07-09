@@ -130,7 +130,7 @@ module.exports = function(config, nodes, levels) {
 
         // Build htmls
         nodeConfig.addTechs(BEM_TEMPLATE_ENGINE === 'BH'? [
-            [techs.engines.bhServer, {
+            [techs.engines.bhServerInclude, {
                 bhOptions: {
                     jsAttrName : 'data-bem',
                     jsAttrScheme : 'json'
