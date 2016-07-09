@@ -11,8 +11,6 @@ var path = require('path'),
     config = bemConfig.moduleSync('bem-lib-site-data');
 
 module.exports = function(pathToLib, version) {
-    version || (version = '1.0.0');
-
     var initialCwd = process.cwd(),
         absPathToLib = path.resolve(pathToLib);
 
@@ -20,7 +18,17 @@ module.exports = function(pathToLib, version) {
     process.chdir(__dirname);
     process.env.BEM_LIB_SITE_GENERATOR_LIB = absPathToLib;
 
-    var lib = path.basename(pathToLib);
+    var lib, packageJson, bowerJson;
+
+    try {
+        packageJson = require(path.join(absPathToLib, 'package'));
+        bowerJson = require(path.join(absPathToLib, 'bower'));
+        lib = packageJson.name || bowerJson.name;
+        version || (version = packageJson.version);
+    } catch(err) {}
+
+    lib || (lib = path.basename(pathToLib));
+    typeof version === 'undefined' && (version = '');
 
     return installBowerDeps(absPathToLib)
         .then(function() {
