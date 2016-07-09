@@ -1,6 +1,6 @@
 {
   "name": "bem-lib-site-data",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Collects data of BEM blocks library for bem-lib-site module",
   "main": "index.js",
   "repository": {
