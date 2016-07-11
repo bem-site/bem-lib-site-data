@@ -7,19 +7,20 @@ var fs = require('fs'),
 
     DEFAULT_LANGS = ['ru', 'en'],
 
-    pathToLib = process.env.BEM_LIB_SITE_GENERATOR_LIB,
-    lib = path.basename(pathToLib),
+    env = process.env,
+    pathToLib = env.BEM_LIB_SITE_PATH,
+    lib = env.BEM_LIB_SITE_LIB,
 
     bemConfig = require('bem-config')(),
-    config = bemConfig.moduleSync('bem-lib-site-data'),
-    libConf = config.libs[lib],
+    config = bemConfig.moduleSync('bem-lib-site-data') || {},
+    libConf = config.libs && config.libs[lib] || {},
     libLangs = process.env.BEM_I18N_LANGS && process.env.BEM_I18N_LANGS.split(' ') || libConf.langs || config.langs,
     bowerConf = fs.existsSync(path.join(pathToLib, 'bower.json')) && require(path.resolve(pathToLib, 'bower.json')) || {},
 
-    platforms = libConf && libConf.platforms || config.platforms,
+    platforms = libConf && libConf.platforms || config.platforms || { desktop: ['common.blocks', 'desktop.blocks'] },
     platformsNames = Object.keys(platforms),
 
-    tempFolder = config.tempFolder,
+    tempFolder = config.tempFolder || 'tmp',
     destFolder = path.join(tempFolder, 'data');
 
 module.exports = function (config) {
@@ -80,7 +81,7 @@ function getLevelsByPlatform(lib, platform) {
 }
 
 function getExampleLevelsByPlatform(lib, platform) {
-    var libConfig = config.libs[lib] || {},
+    var libConfig = config.libs && config.libs[lib] || {},
         pathToLibs = (libConfig.deps || bowerConf.dependencies && Object.keys(bowerConf.dependencies)
             .filter(function(dep) { return dep.indexOf('bem-') > -1; }) || [])
             .map(function(depLibName) {

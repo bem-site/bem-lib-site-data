@@ -8,7 +8,7 @@ var path = require('path'),
     generateDataJson = require('./lib/generate-data-json'),
 
     bemConfig = require('bem-config')(),
-    config = bemConfig.moduleSync('bem-lib-site-data');
+    config = bemConfig.moduleSync('bem-lib-site-data') || {};
 
 module.exports = function(pathToLib, version) {
     var initialCwd = process.cwd(),
@@ -16,7 +16,6 @@ module.exports = function(pathToLib, version) {
 
     // NOTE: needed for magicPlatform
     process.chdir(__dirname);
-    process.env.BEM_LIB_SITE_GENERATOR_LIB = absPathToLib;
 
     var lib, packageJson, bowerJson;
 
@@ -29,6 +28,9 @@ module.exports = function(pathToLib, version) {
 
     lib || (lib = path.basename(pathToLib));
     typeof version === 'undefined' && (version = '');
+
+    process.env.BEM_LIB_SITE_PATH = absPathToLib;
+    process.env.BEM_LIB_SITE_LIB = lib;
 
     return installBowerDeps(absPathToLib)
         .then(function() {
