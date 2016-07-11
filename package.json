@@ -20,6 +20,7 @@
     "bem-config": "^1.1.0",
     "bem-md-renderer": "^0.3.1",
     "bem-naming": "^0.5.1",
+    "bem-walk": "^1.0.0-1",
     "bower": "^1.7.9",
     "bower-endpoint-parser": "^0.2.2",
     "del": "^2.2.1",
@@ -38,6 +39,7 @@
     "enb-xjst": "^2.1.0",
     "glob": "^7.0.5",
     "mkdirp": "^0.5.1",
-    "mv": "^2.1.1"
+    "mv": "^2.1.1",
+    "pinkie-promise": "^2.0.1"
   }
 }
