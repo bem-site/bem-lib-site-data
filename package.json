@@ -16,10 +16,10 @@
   "author": "Vladimir Grinenko <i@tadatuta.com>",
   "license": "MPL-2.0",
   "dependencies": {
-    "bem-blocks-introspect": "^2.0.0",
-    "bem-config": "^1.1.0",
+    "bem-blocks-introspect": "^2.0.1",
+    "bem-config": "^3.0.0",
     "bem-md-renderer": "^0.3.1",
-    "bem-naming": "^0.5.1",
+    "bem-naming": "^1.0.1",
     "bem-walk": "^1.0.0-1",
     "bower": "^1.7.9",
     "bower-endpoint-parser": "^0.2.2",
