@@ -9,8 +9,12 @@ var platform = 'desktop'; // FIXME: !
 module.exports = function(config, nodes, levels) {
     config.nodes(nodes, function(nodeConfig) {
         var nodeDir = nodeConfig.getNodePath(),
-            blockSublevelDir = path.join(nodeDir, '..', '.blocks'),
-            sublevelDir = path.join(nodeDir, 'blocks'),
+            blockName = path.basename(path.dirname(nodeDir)),
+            blockSublevelDir = path.join(nodeDir, blockName + '.blocks'),
+
+            exampleName = path.basename(nodeDir),
+            sublevelDir = path.join(nodeDir, exampleName + '.blocks'),
+
             extendedLevels = [].concat(levels); // TODO: check if it's proper levels
 
         if(fs.existsSync(blockSublevelDir)) {
