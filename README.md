@@ -16,7 +16,7 @@ Consider adding you library to config.
 Library config format (all fields are optional):
 
 ```js
-module.exports = {
+{
     modules: {
         'bem-tools': {
             plugins: {}
