@@ -8,7 +8,7 @@ module.exports = {
     css: {
         stylus: require('enb-stylus/techs/stylus'),
     },
-    js: require('enb-borschik/techs/js-borschik-include'),
+    js: require('enb-js/techs/browser-js'),
     ym: require('enb-modules/techs/prepend-modules'),
     engines: {
         enbxjst: require('enb-xjst/techs/bemhtml'),
@@ -20,6 +20,5 @@ module.exports = {
     html: {
         bemhtml: require('enb-bemxjst/techs/bemjson-to-html'),
         bh: require('enb-bh/techs/bemjson-to-html')
-    },
-    borschik: require('enb-borschik/techs/borschik')
+    }
 };
