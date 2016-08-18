@@ -43,7 +43,7 @@ Library config format (all fields are optional):
             }
         }
     }
-};
+}
 ```
 
 ### Anatomy
