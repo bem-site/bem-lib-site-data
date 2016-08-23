@@ -60,9 +60,9 @@ module.exports = function(pathToLib, version) {
                             resolve({
                                 path: path.join(destPath)
                             });
-                        });
+                        }).catch(reject);
                     });
-                });
+                }).catch(reject);
             });
         })
         .catch(function(err) {
