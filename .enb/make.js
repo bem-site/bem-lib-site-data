@@ -82,6 +82,7 @@ function getLevelsByPlatform(lib, platform) {
 
 function getExampleLevelsByPlatform(lib, platform) {
     var libConfig = config.libs && config.libs[lib] || {},
+        // TODO: search for levels recursively in libs
         pathToLibs = (libConfig.deps || bowerConf.dependencies && Object.keys(bowerConf.dependencies)
             .filter(function(dep) { return dep.indexOf('bem-') > -1; }) || [])
             .map(function(depLibName) {
@@ -92,7 +93,7 @@ function getExampleLevelsByPlatform(lib, platform) {
                 return path.join(tempFolder, 'bower', pathToLib.replace(/\.\.\//g, ''), depLibName);
             }).concat(pathToLib);
 
-    var levels = ['examples.blocks'];
+    var levels = [];
 
     pathToLibs.forEach(function(libPath) {
         var absLibPath = path.resolve(libPath);
@@ -111,6 +112,8 @@ function getExampleLevelsByPlatform(lib, platform) {
             })
         );
     });
+
+    levels.push('examples.blocks');
 
     return levels.filter(fs.existsSync);
 }
