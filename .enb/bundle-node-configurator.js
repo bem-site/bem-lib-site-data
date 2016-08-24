@@ -123,7 +123,9 @@ module.exports = function(config, nodes, levels) {
                 target : '?.browser.bemhtml.js',
                 filesTarget : '?.template.files',
                 compat: true,
-                devMode : false
+                devMode : false,
+                sourceSuffixes: ['bemhtml', 'bemhtml.js'],
+                forceBaseTemplates: true
             }] : [techs.engines.enbxjst, {
                 target : '?.browser.bemhtml.js',
                 filesTarget : '?.template.files',
@@ -142,7 +144,11 @@ module.exports = function(config, nodes, levels) {
             }],
             [techs.html.bh]
         ] : BEM_TEMPLATE_ENGINE === 'BEMHTML'? [
-            [techs.engines.bemhtml, { devMode : false, compat : true }],
+            [techs.engines.bemhtml, {
+                devMode : false,
+                compat : true,
+                sourceSuffixes: ['bemhtml', 'bemhtml.js']
+            }],
             [techs.html.bemhtml]
         ] : [
             [techs.engines.enbxjst, { devMode : false, compat : true }],

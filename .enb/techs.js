@@ -12,6 +12,7 @@ module.exports = {
     ym: require('enb-modules/techs/prepend-modules'),
     engines: {
         enbxjst: require('enb-xjst/techs/bemhtml'),
+        bemhtmlOld: require('enb-bemxjst-1x/techs/bemhtml'),
         bemhtml: require('enb-bemxjst/techs/bemhtml'),
         bhServer: require('enb-bh/techs/bh-commonjs'),
         bhServerInclude: require('enb-bh/techs/bh-bundle'),
