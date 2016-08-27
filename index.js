@@ -50,7 +50,7 @@ module.exports = function(pathToLib, version) {
             return new Promise(function(resolve, reject) {
                 var destPath = path.resolve(initialCwd, config.outputFolder || 'output', 'data', lib);
 
-                del(destPath).then(function() {
+                del(destPath, { force: true }).then(function() {
                     mv(path.resolve(config.tempFolder || 'tmp', 'data', lib), destPath, { mkdirp: true }, function(err) {
                         if (err) return reject(err);
 
