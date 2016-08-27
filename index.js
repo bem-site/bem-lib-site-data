@@ -33,7 +33,7 @@ module.exports = function(pathToLib, version) {
 
     process.env.BEM_LIB_SITE_PATH = absPathToLib;
     process.env.BEM_LIB_SITE_LIB = lib;
-    process.env.BEM_TEMPLATE_ENGINE = libConfig.templateEngine || config.templateEngine;
+    process.env.BEM_TEMPLATE_ENGINE = (libConfig && libConfig.templateEngine) || config.templateEngine;
 
     return installBowerDeps(absPathToLib)
         .then(function() {
