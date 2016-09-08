@@ -56,7 +56,7 @@ module.exports = function(pathToLib, version) {
 
                         Promise.all([
                             del(config.tempFolder),
-                            generateDataJson(destPath, lib, version, pathToLib)
+                            generateDataJson(destPath, lib, version, absPathToLib)
                         ]).then(function() {
                             process.chdir(initialCwd);
                             console.log('Data was collected at', destPath);
