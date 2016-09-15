@@ -12,7 +12,7 @@ var fs = require('fs'),
     lib = env.BEM_LIB_SITE_LIB,
 
     bemConfig = require('bem-config')(),
-    config = bemConfig.moduleSync('bem-lib-site-data') || {},
+    config = bemConfig.moduleSync('bem-lib-site') || {},
     libConf = config.libs && config.libs[lib] || {},
     libLangs = process.env.BEM_I18N_LANGS && process.env.BEM_I18N_LANGS.split(' ') || libConf.langs || config.langs,
     bowerConf = fs.existsSync(path.join(pathToLib, 'bower.json')) && require(path.resolve(pathToLib, 'bower.json')) || {},
@@ -20,7 +20,7 @@ var fs = require('fs'),
     platforms = libConf && libConf.platforms || config.platforms || { desktop: ['common.blocks', 'desktop.blocks'] },
     platformsNames = Object.keys(platforms),
 
-    tempFolder = config.tempFolder || 'tmp',
+    tempFolder = config.data && config.data.tempFolder || 'tmp',
     destFolder = path.join(tempFolder, 'data');
 
 module.exports = function (config) {
