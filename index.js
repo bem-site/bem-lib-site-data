@@ -8,7 +8,7 @@ var path = require('path'),
     generateDataJson = require('./lib/generate-data-json'),
 
     bemConfig = require('bem-config')(),
-    config = bemConfig.moduleSync('bem-lib-site-data') || {};
+    config = bemConfig.moduleSync('bem-lib-site') || {};
 
 module.exports = function(pathToLib, version) {
     var initialCwd = process.cwd(),
@@ -43,19 +43,18 @@ module.exports = function(pathToLib, version) {
             ]);
         })
         .then(function(data) {
-            // var introspectionFiles = data[0];
-
             // move built data to dest folder
             // NOTE: there's no obvious way to build it there beforehand with magicPlatform
             return new Promise(function(resolve, reject) {
-                var destPath = path.resolve(initialCwd, config.outputFolder || 'output', 'data', lib);
+                var destPath = path.resolve(initialCwd, config.data && config.data.outputFolder || 'output-data', lib),
+                    tempFolder = config.data && config.data.tempFolder || 'tmp';
 
                 del(destPath, { force: true }).then(function() {
-                    mv(path.resolve(config.tempFolder || 'tmp', 'data', lib), destPath, { mkdirp: true }, function(err) {
+                    mv(path.resolve(tempFolder, 'data', lib), destPath, { mkdirp: true }, function(err) {
                         if (err) return reject(err);
 
                         Promise.all([
-                            del(config.tempFolder),
+                            del(tempFolder),
                             generateDataJson(destPath, lib, version, absPathToLib)
                         ]).then(function() {
                             process.chdir(initialCwd);
