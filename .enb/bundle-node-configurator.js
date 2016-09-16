@@ -55,9 +55,14 @@ module.exports = function(config, nodes, levels) {
                 compress: true
             }],
             [techs.js, {
-                target : '?.browser.js',
+                target : '?.borschik.browser.js',
                 sourceSuffixes : ['vanilla.js', 'js', 'browser.js'],
                 filesTarget : '?.js.files'
+            }],
+            [techs.borschik, {
+                source: '?.borschik.browser.js',
+                target: '?.browser.js',
+                minify: false
             }],
             [techs.files.merge, {
                 target : '?.pre.js',
