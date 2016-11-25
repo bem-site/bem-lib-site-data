@@ -46,7 +46,9 @@ module.exports = function(pathToLib, version) {
             // move built data to dest folder
             // NOTE: there's no obvious way to build it there beforehand with magicPlatform
             return new Promise(function(resolve, reject) {
-                var destPath = path.resolve(initialCwd, config.data && config.data.outputFolder || 'output-data', lib),
+                var destPath = path.resolve(initialCwd,
+                        config.data && config.data.outputFolder || 'output-data',
+                        lib + '-' + version),
                     tempFolder = config.data && config.data.tempFolder || 'tmp';
 
                 del(destPath, { force: true }).then(function() {
