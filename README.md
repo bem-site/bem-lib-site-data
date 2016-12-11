@@ -16,7 +16,7 @@ Consider adding you library to config.
 Library config format (all fields are optional):
 
 ```js
-module.exports = {
+{
     modules: {
         'bem-lib-site': {
             langs: ['ru', 'en'],
@@ -48,7 +48,7 @@ module.exports = {
             }
         }
     }
-};
+}
 ```
 
 ### Anatomy
