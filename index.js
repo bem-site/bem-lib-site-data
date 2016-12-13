@@ -29,10 +29,11 @@ module.exports = function(pathToLib, version) {
     lib || (lib = path.basename(pathToLib));
     typeof version === 'undefined' && (version = '');
 
-    var libConfig = config.libs && config.libs[lib];
+    var libConfig = config.libs && config.libs[lib],
+        libVer = lib + (version ? '-' + version : '');
 
     process.env.BEM_LIB_SITE_PATH = absPathToLib;
-    process.env.BEM_LIB_SITE_LIB = lib;
+    process.env.BEM_LIB_SITE_LIB = libVer;
     process.env.BEM_TEMPLATE_ENGINE = (libConfig && libConfig.templateEngine) || config.templateEngine;
 
     return installBowerDeps(absPathToLib)
@@ -47,12 +48,11 @@ module.exports = function(pathToLib, version) {
             // NOTE: there's no obvious way to build it there beforehand with magicPlatform
             return new Promise(function(resolve, reject) {
                 var destPath = path.resolve(initialCwd,
-                        config.data && config.data.outputFolder || 'output-data',
-                        lib + '-' + version),
+                        config.data && config.data.outputFolder || 'output-data', libVer),
                     tempFolder = config.data && config.data.tempFolder || 'tmp';
 
                 del(destPath, { force: true }).then(function() {
-                    mv(path.resolve(tempFolder, 'data', lib), destPath, { mkdirp: true }, function(err) {
+                    mv(path.resolve(tempFolder, 'data', libVer), destPath, { mkdirp: true }, function(err) {
                         if (err) return reject(err);
 
                         Promise.all([
