@@ -2,6 +2,7 @@ var fs = require('fs'),
     path = require('path'),
     techs = require('./techs'),
 
+    // TODO: toggle default
     BEM_TEMPLATE_ENGINE = process.env.BEM_TEMPLATE_ENGINE || 'BH';
 
 var platform = 'desktop'; // FIXME: !
@@ -66,7 +67,10 @@ module.exports = function(config, nodes, levels) {
             }],
             [techs.files.merge, {
                 target : '?.pre.js',
-                sources : [BEM_TEMPLATE_ENGINE === 'BH'? '?.browser.bh.js' : '?.browser.bemhtml.js', '?.browser.js']
+                sources : [
+                    '?.browser.' + (BEM_TEMPLATE_ENGINE === 'BH'? 'bh' : 'bemhtml') + '.js',
+                    '?.browser.js'
+                ]
             }],
 
             // TODO: look to options
@@ -100,6 +104,20 @@ module.exports = function(config, nodes, levels) {
             }]
         ]);
 
+        function getXjstTechsByEngine(engine, opts) {
+            var engineKey = {
+                BEMHTML: 'bemhtml',
+                BEMHTML_OLD: 'bemhtmlOld'
+            }[engine] || 'enbxjst'; // TODO: toggle default
+
+            return [techs.engines[engineKey], Object.assign({
+                compat: true,
+                devMode : false,
+                sourceSuffixes: ['bemhtml', 'bemhtml.js'],
+                forceBaseTemplates: true
+            }, opts)];
+        }
+
         // Client Template Engine
         nodeConfig.addTechs([
             [techs.bem.depsByTechToBemdecl, {
@@ -124,19 +142,10 @@ module.exports = function(config, nodes, levels) {
                     jsAttrScheme : 'json'
                 },
                 mimic : 'BEMHTML'
-            }] : BEM_TEMPLATE_ENGINE === 'BEMHTML'? [techs.engines.bemhtml, {
+            }] : getXjstTechsByEngine(BEM_TEMPLATE_ENGINE, {
                 target : '?.browser.bemhtml.js',
-                filesTarget : '?.template.files',
-                compat: true,
-                devMode : false,
-                sourceSuffixes: ['bemhtml', 'bemhtml.js'],
-                forceBaseTemplates: true
-            }] : [techs.engines.enbxjst, {
-                target : '?.browser.bemhtml.js',
-                filesTarget : '?.template.files',
-                compat: true,
-                devMode : false
-            }]
+                filesTarget : '?.template.files'
+            })
         ]);
 
         // Build htmls
@@ -148,15 +157,8 @@ module.exports = function(config, nodes, levels) {
                 }
             }],
             [techs.html.bh]
-        ] : BEM_TEMPLATE_ENGINE === 'BEMHTML'? [
-            [techs.engines.bemhtml, {
-                devMode : false,
-                compat : true,
-                sourceSuffixes: ['bemhtml', 'bemhtml.js']
-            }],
-            [techs.html.bemhtml]
         ] : [
-            [techs.engines.enbxjst, { devMode : false, compat : true }],
+            getXjstTechsByEngine(BEM_TEMPLATE_ENGINE),
             [techs.html.bemhtml]
         ]);
 
