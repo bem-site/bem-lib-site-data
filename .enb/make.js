@@ -39,7 +39,8 @@ module.exports = function (config) {
 
         configureExampleNodes(config,
             [path.join(destFolder, lib, platform + '.examples/*/*')],
-            getExampleLevelsByPlatform(lib, platform));
+            getExampleLevelsByPlatform(lib, platform),
+            platform);
 
         examplesConfigurator.configure({
             levels: levels,
@@ -100,7 +101,7 @@ function getExampleLevelsByPlatform(lib, platform) {
 
         levels = levels.concat(
             path.join(absLibPath, 'blocks'),
-            // path.join(absLibPath, 'test.blocks'), // TODO: ломает engino, должно быть вынесено в конфиг
+            path.join(absLibPath, 'test.blocks'), // TODO: ломает engino, должно быть вынесено в конфиг
             platforms[platform].map(function(level) {
                 return path.join(absLibPath, 'blocks-' + level);
             }),
