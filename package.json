@@ -16,6 +16,7 @@
   "author": "Vladimir Grinenko <i@tadatuta.com>",
   "license": "MPL-2.0",
   "dependencies": {
+    "beautify": "0.0.8",
     "bem-blocks-introspect": "^2.0.1",
     "bem-config": "^3.0.0",
     "bem-md-renderer": "^0.3.1",
@@ -39,8 +40,11 @@
     "enb-stylus": "^2.4.0",
     "enb-xjst": "^2.1.0",
     "glob": "^7.0.6",
+    "highlight.js": "^9.10.0",
+    "js-beautify": "^1.6.12",
     "mkdirp": "^0.5.1",
     "mv": "^2.1.1",
+    "node-eval": "^1.1.0",
     "pinkie-promise": "^2.0.1"
   }
 }
