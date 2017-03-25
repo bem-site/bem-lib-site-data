@@ -45,6 +45,7 @@
     "mkdirp": "^0.5.1",
     "mv": "^2.1.1",
     "node-eval": "^1.1.0",
-    "pinkie-promise": "^2.0.1"
+    "pinkie-promise": "^2.0.1",
+    "stringify-object": "^3.2.0"
   }
 }
