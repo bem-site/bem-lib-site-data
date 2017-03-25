@@ -5,9 +5,7 @@ var fs = require('fs'),
     // TODO: toggle default
     BEM_TEMPLATE_ENGINE = process.env.BEM_TEMPLATE_ENGINE || 'BH';
 
-var platform = 'desktop'; // FIXME: !
-
-module.exports = function(config, nodes, levels) {
+module.exports = function(config, nodes, levels, platform) {
     config.nodes(nodes, function(nodeConfig) {
         var nodeDir = nodeConfig.getNodePath(),
             blockName = path.basename(path.dirname(nodeDir)),
@@ -16,7 +14,8 @@ module.exports = function(config, nodes, levels) {
             exampleName = path.basename(nodeDir),
             sublevelDir = path.join(nodeDir, exampleName + '.blocks'),
 
-            extendedLevels = [].concat(levels); // TODO: check if it's proper levels
+            // FIXME: pass extended levels from config
+            extendedLevels = [].concat(levels);
 
         if(fs.existsSync(blockSublevelDir)) {
             extendedLevels.push(blockSublevelDir);
