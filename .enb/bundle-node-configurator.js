@@ -111,7 +111,8 @@ module.exports = function(config, nodes, levels, platform) {
 
             return [techs.engines[engineKey], Object.assign({
                 compat: true,
-                devMode : false,
+                devMode: false,
+                engineOptions: { elemJsInstances : true },
                 sourceSuffixes: ['bemhtml', 'bemhtml.js'],
                 forceBaseTemplates: true
             }, opts)];
