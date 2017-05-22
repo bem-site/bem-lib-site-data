@@ -1,6 +1,7 @@
 var fs = require('fs'),
     path = require('path'),
     naming = require('bem-naming'),
+    mkdirp = require('mkdirp'),
     endpointParser = require('bower-endpoint-parser'),
 
     configureExampleNodes = require('./bundle-node-configurator'),
@@ -121,7 +122,11 @@ function getExampleLevelsByPlatform(lib, platform) {
 
 
 function wrapInPage(bemjson, meta) {
-    var basename = path.basename(meta.filename, '.bemjson.js');
+    var basename = path.basename(meta.filename, '.bemjson.js'),
+        shortBemjsonFilename = meta.filename.replace('.bemjson.js', '.short.bemjson.js');
+
+    mkdirp.sync(path.dirname(shortBemjsonFilename));
+    fs.writeFileSync(shortBemjsonFilename, "(" + JSON.stringify(bemjson) + ")");
 
     if (libConf.coreLib === 'bem-bl') {
         return {
