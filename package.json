@@ -26,7 +26,7 @@
     "bower-endpoint-parser": "^0.2.2",
     "del": "^2.2.2",
     "enb": "^1.4.0",
-    "enb-bem-docs": "^0.12.0",
+    "enb-bem-docs": "enb/enb-bem-docs#temp-update-bem-jsd",
     "enb-bem-examples": "^1.0.2",
     "enb-bem-techs": "^2.2.1",
     "enb-bemxjst": "^6.5.1",
